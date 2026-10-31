@@ -1,1 +1,214 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviator Predictor</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #090909;
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 450px;
+  margin: 30px auto;
+  background: #171717;
+  border: 1px solid #333;
+  border-radius: 18px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 30px #ff252533;
+}
+
+h1 {
+  color: #ff3030;
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 25px;
+}
+
+.plane {
+  font-size: 65px;
+  margin: 15px;
+}
+
+.status {
+  color: #00e676;
+  font-weight: bold;
+  margin: 15px;
+}
+
+.result {
+  background: #080808;
+  border: 2px solid #ff3030;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.result h2 {
+  color: #aaa;
+  font-size: 15px;
+}
+
+.multiplier {
+  font-size: 55px;
+  font-weight: bold;
+  color: #ff3030;
+  margin-top: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  background: #ff3030;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #d90000;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.history {
+  margin-top: 25px;
+  text-align: left;
+}
+
+.history h3 {
+  margin-bottom: 12px;
+  color: #ff3030;
+}
+
+.history-item {
+  background: #242424;
+  padding: 12px;
+  margin: 7px 0;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.note {
+  color: #888;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 22px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>AVIATOR</h1>
+  <p class="subtitle">PREDICTOR DASHBOARD</p>
+
+  <div class="plane">✈️</div>
+
+  <div class="status" id="status">
+    ● SYSTEM READY
+  </div>
+
+  <div class="result">
+    <h2>DEMO MULTIPLIER</h2>
+    <div class="multiplier" id="multiplier">--.--x</div>
+  </div>
+
+  <button id="predictBtn" onclick="predict()">
+    START PREDICTING
+  </button>
+
+  <div class="history">
+    <h3>Prediction History</h3>
+    <div id="history">
+      <p style="color:#888">No predictions yet.</p>
+    </div>
+  </div>
+
+  <p class="note">
+    DEMO MODE: Results are randomly generated for entertainment.
+    They do not predict actual Aviator crash outcomes or guarantee wins.
+  </p>
+
+</div>
+
+<script>
+function predict() {
+  const button = document.getElementById("predictBtn");
+  const status = document.getElementById("status");
+  const multiplier = document.getElementById("multiplier");
+
+  button.disabled = true;
+  button.innerText = "GENERATING...";
+  status.innerText = "● GENERATING DEMO RESULT";
+  status.style.color = "#ffcc00";
+
+  multiplier.innerText = "?.??x";
+
+  setTimeout(() => {
+    const result = (1 + Math.random() * 9).toFixed(2);
+
+    multiplier.innerText = result + "x";
+
+    status.innerText = "● DEMO RESULT GENERATED";
+    status.style.color = "#00e676";
+
+    const history = document.getElementById("history");
+
+    if (history.querySelector("p")) {
+      history.innerHTML = "";
+    }
+
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const time = new Date().toLocaleTimeString();
+
+    const timeSpan = document.createElement("span");
+    timeSpan.textContent = time;
+
+    const resultSpan = document.createElement("strong");
+    resultSpan.style.color = "#ff3030";
+    resultSpan.textContent = result + "x";
+
+    item.appendChild(timeSpan);
+    item.appendChild(resultSpan);
+
+    history.prepend(item);
+
+    button.disabled = false;
+    button.innerText = "START PREDICTING";
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
+
